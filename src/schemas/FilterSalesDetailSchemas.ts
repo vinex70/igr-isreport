@@ -44,6 +44,7 @@ export const filterSalesDetailSchema = z.object({
     tipeMember: z.string().toUpperCase().optional(),
     groupMember: z.string().toUpperCase().optional(),
     kasirType: z.string().optional(),
+    methodType: z.string().optional(),
     kasir: z.array(z.string()).optional().default([]),
     kode_supplier: z.array(z.string()).optional().default([]),
     namaSupplier: z

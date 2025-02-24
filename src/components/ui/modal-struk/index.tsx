@@ -52,8 +52,20 @@ const StrukModal: React.FC<StrukModalProps> = ({ filename, onClose }) => {
                     <head>
                         <title>Print Struk</title>
                         <style>
-                            body { font-family: Arial, sans-serif; white-space: pre-wrap; }
-                            pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+                            body { font-family: Arial, sans-serif; white-space: pre-wrap; height: fit-content; }
+                            pre { background: #f4f4f4; padding: 5px; border-radius: 5px; margin: 0 auto; }
+                            @media print {
+                                body {
+                                    width: 80mm; /* Lebar kertas saat dicetak */
+                                    height: auto; /* Tinggi disesuaikan dengan konten */
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                    pre {
+                                    background: none; /* Hapus background saat dicetak */
+                                    border: none;
+                                    padding: 0;
+                                }
                         </style>
                     </head>
                     <body>

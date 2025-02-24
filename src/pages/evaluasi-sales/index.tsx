@@ -43,6 +43,7 @@ import CbUcDropdown from "@/components/ui/dropdown/dropdown-cb-uc";
 import KasirRadio from "@/components/ui/radio/radio-kasir";
 import ItemLaranganRadio from "@/components/ui/radio/radio-item-larangan";
 import DatePickerInput from "@/components/ui/DatePickerInput";
+import KasirRadioMethode from "@/components/ui/radio/radio-kasir-method";
 
 // Tipe data berdasarkan schema Zod
 type FormValues = z.infer<typeof filterSalesDetailSchema>;
@@ -84,7 +85,7 @@ const Index = () => {
             return;
         }
 
-        navigate(`/cpg-vite/evaluasi-sales/${selectedReport}`, {
+        navigate(`/evaluasi-sales/${selectedReport}`, {
             state: { startDate, endDate, selectedReport, ...filters },
         });
     };
@@ -122,8 +123,10 @@ const Index = () => {
 
                         {/* Kolom 2 */}
                         <div className="flex-1 flex flex-col gap-4 justify-between">
+                            {/* Kasir */}
                             <SectionBox title="Kasir">
                                 <KasirRadio />
+                                <KasirRadioMethode />
                                 <KasirInput ref={refs.kasirInput} />
                             </SectionBox>
 

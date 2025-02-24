@@ -32,7 +32,7 @@ const ListPga = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <Link to="/cpg-vite/evaluasi-sales">Evaluasi - Sales</Link>
+                        <Link to="/evaluasi-sales">Evaluasi - Sales</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         Billing

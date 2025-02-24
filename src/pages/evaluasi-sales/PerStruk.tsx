@@ -98,6 +98,7 @@ const PerStruk = () => {
         dtl_struk: string;
         dtl_stat: string;
         dtl_cusno: string;
+        dtl_kasir: string;
         dtl_namamember: string;
         dtl_prdcd_ctn: string;
         dtl_qty_pcs: number;
@@ -105,10 +106,11 @@ const PerStruk = () => {
         dtl_netto: number;
         dtl_margin: number;
         dtl_flagmemberkhusus: string;
+        dtl_method: string;
     }
 
     const handleViewStruk = (item: Item) => {
-        const filename = `${item.dtl_struk.slice(0, 8)}/${item.dtl_stat}/${item.dtl_struk}.TXT`;
+        const filename = `${item.dtl_kasir === 'IK1' || item.dtl_kasir === 'IK2' || item.dtl_kasir === 'IK3' ? 'IKIOSK/' + item.dtl_struk.slice(0, 8) : item.dtl_struk.slice(0, 8)}/${item.dtl_stat}/${item.dtl_struk}.TXT`;
         const encodedFilename = encodeURIComponent(filename);
 
         setSelectedFilename(encodedFilename);
@@ -159,6 +161,7 @@ const PerStruk = () => {
                                         <th className="text-center text-white">Margin</th>
                                         <th className="text-center text-white">%</th>
                                         <th className="text-center text-white">Jenis Mem</th>
+                                        <th className="text-center text-white">Method</th>
                                         <th className="text-center text-white">Action</th>
                                     </tr>
                                 </thead>
@@ -178,6 +181,7 @@ const PerStruk = () => {
                                                 <td className="text-end">{FormatNumbers(item.dtl_margin)}</td>
                                                 <td className="text-end">{FormatPercentage(item.dtl_margin / item.dtl_netto * 100)} %</td>
                                                 <td className="text-center">{item.dtl_flagmemberkhusus}</td>
+                                                <td className="text-center">{item.dtl_method}</td>
                                                 <td className="text-center">
                                                     <button
                                                         onClick={() => handleViewStruk(item)}
@@ -204,7 +208,7 @@ const PerStruk = () => {
                                                     data.reduce((sum, item) => sum + Number(item.dtl_netto), 0)) * 100
                                             )} %
                                         </td>
-                                        <td colSpan={2}></td>
+                                        <td colSpan={3}></td>
                                     </tr>
                                 </tfoot>
                             </table>
