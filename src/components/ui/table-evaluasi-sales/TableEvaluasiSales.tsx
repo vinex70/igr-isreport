@@ -5,6 +5,8 @@ import { RiFileExcel2Line } from "react-icons/ri";
 import useExportExcel from "@/hooks/useExportExcel"; // Import custom hook
 import useSearch from "@/hooks/useSearch"; // Import custom hook untuk pencarian
 import { ApiSalesDetail } from "@/types/apiDataSalesDetail";
+import { Link } from "react-router-dom";
+import { MdSubdirectoryArrowLeft } from "react-icons/md";
 
 interface Column {
     key: string | keyof ApiSalesDetail;
@@ -83,8 +85,20 @@ const TableReusable: React.FC<TableReusableProps> = ({
 
     return (
         <>
+            <div className="my-5">
+                <Link to="/evaluasi-sales">
+                    <button className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+                        <MdSubdirectoryArrowLeft size={30} />  Back Evaluasi Sales
+                    </button>
+                </Link>
+            </div>
+
             <div className="flex justify-between items-center my-5">
-                {caption && <h1>{caption}</h1>}
+                {caption && (
+                    <div className="gap-4">
+                        <h1>{caption}</h1>
+                    </div>
+                )}
                 <div className="flex gap-4">
                     {inputSearch && (
                         <div className="relative flex items-center">

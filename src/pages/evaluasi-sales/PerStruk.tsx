@@ -2,13 +2,14 @@ import { useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
 import useSearch from "@/hooks/useSearch";
 import { FormatNumbers, FormatPercentage } from "@/utils/FormatNumbers";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LoadingIgr from "@/components/ui/loading-igr";
 import { exportToExcelStyled } from "@/utils/excelExport";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { IoSearchSharp } from "react-icons/io5";
 import { formatDate } from "@/utils/FormateDate";
 import StrukModal from "@/components/ui/modal-struk"; // Import komponen modal
+import { MdSubdirectoryArrowLeft } from "react-icons/md";
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -121,6 +122,14 @@ const PerStruk = () => {
         <>
             {isLoading ? <LoadingIgr /> : error ? <p className="error">{error}</p > :
                 <div className="container mx-auto">
+                    <div className="my-5">
+                        <Link to="/evaluasi-sales">
+                            <button className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+                                <MdSubdirectoryArrowLeft size={30} />  Back Evaluasi Sales
+                            </button>
+                        </Link>
+                    </div>
+
                     <div className="flex justify-between items-center my-5">
                         <div>
                             <h1 className="text-2xl font-bold">Laporan : Evaluasi Sales - {filters.selectedReport.toUpperCase()}</h1>
@@ -151,14 +160,14 @@ const PerStruk = () => {
                                 <thead className="sticky top-0 bg-blue-400 text-center">
                                     <tr className="border">
                                         <th className="text-center text-white">#</th>
-                                        <th className="text-center text-white">Struk</th>
-                                        <th className="text-center text-white">Station</th>
-                                        <th className="text-center text-white" colSpan={2}>Member</th>
+                                        <th className="text-left text-white">Struk</th>
+                                        <th className="text-left text-white">Station</th>
+                                        <th className="text-left text-white" colSpan={2}>Member</th>
                                         <th className="text-center text-white">Produk</th>
-                                        <th className="text-center text-white">Qty In Pcs</th>
-                                        <th className="text-center text-white">Gross</th>
-                                        <th className="text-center text-white">Netto</th>
-                                        <th className="text-center text-white">Margin</th>
+                                        <th className="text-end text-white">In Pcs</th>
+                                        <th className="text-end text-white">Gross</th>
+                                        <th className="text-end text-white">Netto</th>
+                                        <th className="text-end text-white">Margin</th>
                                         <th className="text-center text-white">%</th>
                                         <th className="text-center text-white">Jenis Mem</th>
                                         <th className="text-center text-white">Method</th>
@@ -168,12 +177,12 @@ const PerStruk = () => {
                                 <tbody className="border">
                                     {filteredData.map((item, index) => {
                                         return (
-                                            <tr key={index} className="hover:bg-blue-200 border">
-                                                <td className="text-center">{index + 1}</td>
+                                            <tr key={item.dtl_struk.concat(item.dtl_stat)} className="hover:bg-blue-200 border">
+                                                <td className="text-left">{index + 1}</td>
                                                 <td className="text-center">{item.dtl_struk}</td>
                                                 <td className="text-center">{item.dtl_stat}</td>
                                                 <td className="text-center">{item.dtl_cusno}</td>
-                                                <td className="text-center">{item.dtl_namamember}</td>
+                                                <td className="text-left">{item.dtl_namamember}</td>
                                                 <td className="text-end">{FormatNumbers(item.dtl_prdcd_ctn)}</td>
                                                 <td className="text-end">{FormatNumbers(item.dtl_qty_pcs)}</td>
                                                 <td className="text-end">{FormatNumbers(item.dtl_gross)}</td>
@@ -187,7 +196,7 @@ const PerStruk = () => {
                                                         onClick={() => handleViewStruk(item)}
                                                         className="bg-blue-500 rounded mx-2 hover:bg-blue-700 text-white py-1 px-2"
                                                     >
-                                                        View Struk
+                                                        Struk
                                                     </button>
                                                 </td>
                                             </tr>

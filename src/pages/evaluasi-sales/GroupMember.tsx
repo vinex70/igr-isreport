@@ -1,13 +1,14 @@
 import useFetchData from "@/hooks/useFetchData";
 import useSearch from "@/hooks/useSearch"; // Import custom hook
 import { FormatNumbers, FormatPercentage } from "@/utils/FormatNumbers";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useMemo } from "react";
 import LoadingIgr from "@/components/ui/loading-igr";
 import { exportToExcelStyled } from "@/utils/excelExport";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { IoSearchSharp } from "react-icons/io5";
 import { formatDate } from "@/utils/FormateDate";
+import { MdSubdirectoryArrowLeft } from "react-icons/md";
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -110,6 +111,14 @@ const GroupMember = () => {
         <>
             {isLoading ? <LoadingIgr /> : error ? <p className="error">{error}</p > :
                 <div className="container mx-auto">
+                    <div className="my-5">
+                        <Link to="/evaluasi-sales">
+                            <button className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+                                <MdSubdirectoryArrowLeft size={30} />  Back Evaluasi Sales
+                            </button>
+                        </Link>
+                    </div>
+
                     <div className="flex justify-between items-center my-5">
                         <div>
                             <h1 className="text-2xl font-bold">Laporan : Evaluasi Sales - {filters.selectedReport.toUpperCase()}</h1>

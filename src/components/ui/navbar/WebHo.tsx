@@ -8,16 +8,12 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
+
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const ListPga = () => {
+const ProgramHo = () => {
     useEffect(() => {
         const handleShortcut = (event: KeyboardEvent) => {
             if ((event.metaKey || event.ctrlKey) && event.altKey && event.key === "s") { // ⌘ + S
@@ -44,31 +40,38 @@ const ListPga = () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="text-white">
-                    Store <IoMdArrowDropdown />
+                    Web HO <IoMdArrowDropdown />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>STORE CIPINANG</DropdownMenuLabel>
+                <DropdownMenuLabel>Program HO</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <Link to="/evaluasi-sales">Evaluasi - Sales</Link>
-                        <DropdownMenuShortcut>Ctrl+Alt+E</DropdownMenuShortcut>
+                        <Link to="http://192.168.226.190:81/login" target="_blank">IAS PHP</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link to="/informasi-promosi">Informasi Promosi</Link>
-                        <DropdownMenuShortcut>Ctrl+Alt+I</DropdownMenuShortcut>
+                        <Link to="http://172.20.30.3/ESS/HomePortal/Login" target="_blank">ESS</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
+                        <Link to="http://172.20.30.3/tsm/" target="_blank">TSM 1</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link to="http://172.20.30.4/tsm/" target="_blank">TSM 2</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link to="http://172.20.30.5/tsm/" target="_blank">TSM 3</Link>
+                    </DropdownMenuItem>
+                    {/* <DropdownMenuItem>
                         Settings
                         <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         Keyboard shortcuts
                         <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
+                {/* <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuSub>
@@ -95,10 +98,10 @@ const ListPga = () => {
                 <DropdownMenuItem>
                     Log out
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
             </DropdownMenuContent>
         </DropdownMenu>
     );
 };
 
-export default ListPga;
+export default ProgramHo;

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ListPga from './Store';
 import { Button } from "@/components/ui/button"
+import ProgramHo from './WebHo';
 
 const Navbar = () => {
     return (
@@ -25,6 +26,7 @@ const Navbar = () => {
                         </Button>
                     </div>
                     <ListPga />
+                    <ProgramHo />
                     <div>
                         <Button variant="ghost" className='text-white'>
                             <Link to="/settingharga">

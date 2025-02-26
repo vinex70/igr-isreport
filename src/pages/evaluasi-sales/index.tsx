@@ -111,14 +111,17 @@ const Index = () => {
                                 <DatePickerInput name="endDate" />
                             </SectionBox>
 
-                            <SectionBox title="Promo">
-                                <CashbackInput ref={refs.cashbackInput} />
-                                <PromoInput ref={refs.promoInput} />
-                                <CashbackAktifDropdown />
-                                <GiftDropdown />
-                                <CbRedemPoinDropdown />
-                                <CbUcDropdown />
+                            <SectionBox title="Member">
+                                <NamaMember ref={refs.namaMember} />
+                                <NoMember ref={refs.noMember} />
+                                <MonitoringMember ref={refs.monitoringMember} />
+                                <StrukInput ref={refs.strukInput} />
+                                <DropdownMemberKhusus />
+                                <OutletDropdown />
+                                <SubOutletDropdown />
                             </SectionBox>
+
+
                         </div>
 
                         {/* Kolom 2 */}
@@ -130,14 +133,13 @@ const Index = () => {
                                 <KasirInput ref={refs.kasirInput} />
                             </SectionBox>
 
-                            <SectionBox title="Member">
-                                <NamaMember ref={refs.namaMember} />
-                                <NoMember ref={refs.noMember} />
-                                <MonitoringMember ref={refs.monitoringMember} />
-                                <StrukInput ref={refs.strukInput} />
-                                <DropdownMemberKhusus />
-                                <OutletDropdown />
-                                <SubOutletDropdown />
+                            <SectionBox title="Promo">
+                                <CashbackInput ref={refs.cashbackInput} />
+                                <PromoInput ref={refs.promoInput} />
+                                <CashbackAktifDropdown />
+                                <GiftDropdown />
+                                <CbRedemPoinDropdown />
+                                <CbUcDropdown />
                             </SectionBox>
                         </div>
 
