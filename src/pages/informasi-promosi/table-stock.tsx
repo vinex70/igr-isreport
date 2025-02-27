@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormatNumbers } from "@/utils/FormatNumbers";
 import useFetchDatas from "@/hooks/useFetchDatas";
+import ModalLokasi from "@/pages/informasi-promosi/modal-lokasi";
+import ModalSoIc from "@/pages/informasi-promosi/modal-soic";
 
 type TableStockProps = {
     plu: string | undefined;
@@ -23,12 +25,35 @@ type StockItem = {
     kat_namakategori: string;
 };
 
+// Daftar modal yang tersedia
+const modals = {
+    lokasi: ModalLokasi,
+    soic: ModalSoIc,
+} as const;
+
+type ModalType = keyof typeof modals;
 
 const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
     const { data: stockData, loading, error } = useFetchDatas<StockItem[]>(
         "/api/informasi-promosi/datastock",
         { plu, barcode }
     );
+
+    const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+    const [selectedPLU, setSelectedPLU] = useState<string | null>(null);
+    const [selectedDeskripsi, setSelectedDeskripsi] = useState<string | null>(null);
+
+    const handleOpenModal = (modalType: ModalType, plu: string, deskripsi: string) => {
+        setSelectedPLU(plu);
+        setSelectedDeskripsi(deskripsi);
+        setActiveModal(modalType);
+    };
+
+    const handleCloseModal = () => {
+        setActiveModal(null);
+        setSelectedPLU(null);
+        setSelectedDeskripsi(null);
+    };
 
     return (
         <div className="border rounded-md bg-gray-50 h-full">
@@ -86,6 +111,7 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
                                     {item.pb_out === null ? 0 : FormatNumbers(item.pb_out)}
                                 </div>
                             </div>
+
                             {/* Kolom div dept katb */}
                             <div className="flex items-center justify-center border w-full p-4 text-xs">
                                 ({item.prd_kodedivisi}) - {item.div_namadivisi},
@@ -93,9 +119,21 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
                                 ({item.prd_kodekategoribarang}) - {item.kat_namakategori}
                             </div>
 
-                            {/* Kolom Modal */}
-                            <div>
+                            {/* Tombol untuk membuka modal */}
+                            <div className="flex justify-center p-2 gap-2">
+                                <button
+                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                    onClick={() => handleOpenModal("lokasi", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                >
+                                    Lokasi
+                                </button>
 
+                                <button
+                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                    onClick={() => handleOpenModal("soic", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                >
+                                    So Ic
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -107,8 +145,17 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
                     <p className="text-gray-500">Produk tidak ditemukan !!!</p>
                 </div>
             )}
-        </div>
 
+            {/* Render modal secara dinamis */}
+            {activeModal && selectedPLU && (
+                React.createElement(modals[activeModal], {
+                    isOpen: !!activeModal,
+                    onClose: handleCloseModal,
+                    plu: selectedPLU,
+                    deskripsi: selectedDeskripsi
+                })
+            )}
+        </div>
     );
 };
 
