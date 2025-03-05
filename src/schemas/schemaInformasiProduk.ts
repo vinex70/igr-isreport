@@ -7,7 +7,7 @@ export const promoSchema = z.object({
         .transform((v) => (v ? v.trim().padStart(7, "0") : v))
         .refine((v) => !v || /^\d+$/.test(v), { message: "PLU harus berupa angka" }) // Validasi hanya jika ada nilai
         .optional(),
-
+    pluSatuanJual: z.string().optional(),
     barcode: z.string().transform((val) => val.toUpperCase()).optional(),
     namaBarang: z.string().transform((val) => val.toUpperCase()).optional(),
     serchProduk: z.string().transform((val) => val.toUpperCase()).optional(),

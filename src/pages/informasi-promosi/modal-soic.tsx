@@ -93,7 +93,7 @@ const ModalSoIc: React.FC<ModalSoIcProps> = ({ isOpen, onClose, plu, deskripsi }
                         </table>
                     </div>
                 ) : (
-                    !loading && !error && <p className="text-gray-500">Tidak ada data lokasi.</p>
+                    !loading && !error && <p className="text-gray-500">Tidak ada data SO IC.</p>
                 )}
 
                 <div className="mt-4 flex justify-end">

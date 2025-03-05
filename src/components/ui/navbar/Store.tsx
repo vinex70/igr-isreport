@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,6 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
     DropdownMenuSub,
@@ -16,88 +15,107 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useKeyboardShortcuts from "@/hooks/useKeyboardShortcuts";
 
 const ListPga = () => {
-    useEffect(() => {
-        const handleShortcut = (event: KeyboardEvent) => {
-            if ((event.metaKey || event.ctrlKey) && event.altKey && event.key === "s") { // ⌘ + S
-                event.preventDefault();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    // Function to handle keyboard shortcuts
+    const handleShortcut = (action: string) => {
+        switch (action) {
+            case "settings":
                 alert("Settings shortcut triggered!"); // Ganti dengan aksi yang diinginkan
-            }
-            if ((event.metaKey || event.ctrlKey) && event.altKey && event.key === "e") { // ⌘ + B
-                event.preventDefault();
-                window.location.href = "/cpg-vite/evaluasi-sales"; // Navigasi manual
-            }
-            if ((event.metaKey || event.ctrlKey) && event.altKey && event.key === "i") { // ⌘ + T
-                event.preventDefault();
-                window.location.href = "/cpg-vite/informasi-promosi"; // Navigasi manual
+                break;
+            case "evaluasi-sales":
+                window.location.href = "/cpg-vite/evaluasi-sales";
+                break;
+            case "informasi-promosi":
+                window.location.href = "/cpg-vite/informasi-promosi";
+                break;
+            default:
+                break;
+        }
+    };
+
+    useKeyboardShortcuts(handleShortcut);
+
+    // Menangani klik di luar dropdown untuk menutupnya
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false); // Menutup dropdown jika klik di luar
             }
         };
 
-        document.addEventListener("keydown", handleShortcut);
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.removeEventListener("keydown", handleShortcut);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
 
+    const handleToggleDropdown = () => {
+        setIsOpen(prevState => !prevState);
+    };
+
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-white">
-                    Store <IoMdArrowDropdown />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>STORE CIPINANG</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <Link to="/evaluasi-sales">Evaluasi - Sales</Link>
-                        <DropdownMenuShortcut>Ctrl+Alt+E</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link to="/informasi-promosi">Informasi Promosi</Link>
-                        <DropdownMenuShortcut>Ctrl+Alt+I</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Keyboard shortcuts
-                        <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
+        <div ref={dropdownRef}>
+            <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="text-white" onClick={handleToggleDropdown}>
+                        Store <IoMdArrowDropdown />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>STORE CIPINANG</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <Link to="/evaluasi-sales">Evaluasi - Sales</Link>
+                            <DropdownMenuShortcut>Ctrl+Alt+E</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link to="/informasi-promosi">Informasi Promosi</Link>
+                            <DropdownMenuShortcut>Ctrl+Alt+I</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            Settings
+                            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            Keyboard shortcuts
+                            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>Team</DropdownMenuItem>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem>Email</DropdownMenuItem>
                                 <DropdownMenuItem>Message</DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>More...</DropdownMenuItem>
                             </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                    </DropdownMenuSub>
+                        </DropdownMenuSub>
+                        <DropdownMenuItem>
+                            New Team
+                            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>GitHub</DropdownMenuItem>
+                    <DropdownMenuItem>Support</DropdownMenuItem>
+                    <DropdownMenuItem disabled>API</DropdownMenuItem>
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                        New Team
-                        <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                        Log out
+                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>GitHub</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuItem disabled>API</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
     );
 };
 

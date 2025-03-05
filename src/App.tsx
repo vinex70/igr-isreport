@@ -15,12 +15,12 @@ function App() {
         <div className='min-h-screen'>
           <Navbar />
           <Routes> {/* Routes dipindahkan ke App */}
-            <Route path={`/`} element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             {/* Tambahkan rute-rute lain di sini */}
-            <Route path={`/settingharga`} element={<SettingHarga />} />
-            <Route path={`/evaluasi-sales/*`} element={<EvaluasiSalesRoutes />} />
-            <Route path={`/informasi-promosi`} element={<InfromasiPromosi />} />
-            <Route path={`/*`} element={<NotFoundPages />} />
+            <Route path="/settingharga" element={<SettingHarga />} />
+            <Route path="/evaluasi-sales/*" element={<EvaluasiSalesRoutes />} />
+            <Route path="/informasi-promosi" element={<InfromasiPromosi />} />
+            <Route path="/*" element={<NotFoundPages />} />
           </Routes>
         </div>
       </section>

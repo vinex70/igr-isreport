@@ -3,6 +3,7 @@ import { FormatNumbers } from "@/utils/FormatNumbers";
 import useFetchDatas from "@/hooks/useFetchDatas";
 import ModalLokasi from "@/pages/informasi-promosi/modal-lokasi";
 import ModalSoIc from "@/pages/informasi-promosi/modal-soic";
+import ModalPbPoBtbt from "./modal-pb-po-btb";
 
 type TableStockProps = {
     plu: string | undefined;
@@ -28,6 +29,7 @@ type StockItem = {
 // Daftar modal yang tersedia
 const modals = {
     lokasi: ModalLokasi,
+    pb: ModalPbPoBtbt,
     soic: ModalSoIc,
 } as const;
 
@@ -133,6 +135,13 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
                                     onClick={() => handleOpenModal("soic", item.prd_prdcd, item.prd_deskripsipanjang)}
                                 >
                                     So Ic
+                                </button>
+
+                                <button
+                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                    onClick={() => handleOpenModal("pb", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                >
+                                    Pb
                                 </button>
                             </div>
                         </div>

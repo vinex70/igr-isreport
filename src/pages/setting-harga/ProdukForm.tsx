@@ -202,7 +202,6 @@ const ProdukForm: React.FC<ProdukFormProps> = React.memo(({ produk, onSubmit }) 
                                             {(NettoBaru ? `${calculateMargin(NettoBaru, prd.prd_avgcost)} %` : "")}
                                         </TableCell>
 
-
                                         <TableCell className="text-xs text-black border border-solid text-center">
                                             <Button
                                                 className={`${hargaInputs[prd.prd_prdcd] ? "bg-blue-500 hover:bg-blue-700" : "bg-gray-500 cursor-not-allowed"} text-white font-bold py-2 px-4 rounded`}
