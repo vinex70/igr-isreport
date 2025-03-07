@@ -4,6 +4,8 @@ import { PromoFormValues } from "@/schemas/schemaInformasiProduk";
 import TableStock from "./table-stock";
 import TableSatuanJual from "./table-satuan-jual";
 import TableHargaPerjenisMember from "./table-harga-perjenis-member";
+import TablePromoCashback from "./table-promo-cashback";
+import TablePromoGift from "./table-promo-gift";
 
 const InformasiPromosi: React.FC = () => {
     const [formData, setFormData] = useState<PromoFormValues | null>(null);
@@ -49,18 +51,10 @@ const InformasiPromosi: React.FC = () => {
 
                     </div>
                     {/* Table Promo Cashback */}
-                    <div className="p-4 border rounded-md bg-gray-100">
-                        <h2 className="text-lg font-semibold text-gray-700">Promo Cashback:</h2>
-                        <p><strong>PLU:</strong> {formData.plu}</p>
-                        <p><strong>Barcode:</strong> {formData.barcode}</p>
-                    </div>
+                    <TablePromoCashback plu={formData.plu} barcode={formData.barcode} />
 
                     {/* Table Promo Gift */}
-                    <div className="p-4 border rounded-md bg-gray-100">
-                        <h2 className="text-lg font-semibold text-gray-700">Promo Gift:</h2>
-                        <p><strong>PLU:</strong> {formData.plu}</p>
-                        <p><strong>Barcode:</strong> {formData.barcode}</p>
-                    </div>
+                    <TablePromoGift plu={formData.plu} barcode={formData.barcode} />
 
                     {/* Table Promo Instore */}
                     <div className="p-4 border rounded-md bg-gray-100">

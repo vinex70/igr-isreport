@@ -154,7 +154,7 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Mrg</th>
                                 <th className="border text center bg-green-400" colSpan={4}>Promo MD</th>
                                 <th className="border text center bg-red-400" colSpan={2}>Setting</th>
-                                <th className="border text center bg-blue-400" rowSpan={2}>Add</th>
+                                <th className="border text center bg-blue-400" rowSpan={2}>Action</th>
                             </tr>
                             <tr className="border text-white text-sm">
                                 <th className="p-2 border bg-green-400">Hrg</th>

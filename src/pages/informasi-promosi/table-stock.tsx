@@ -58,7 +58,7 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
     };
 
     return (
-        <div className="border rounded-md bg-gray-50 h-full">
+        <div className="border rounded-md bg-gray-50 h-full shadow-xl">
             {loading && <p className="text-blue-500">Memuat data...</p>}
             {error && <p className="text-red-500">{error}</p>}
 

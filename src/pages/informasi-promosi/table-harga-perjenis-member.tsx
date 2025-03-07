@@ -32,8 +32,6 @@ const TableHargaPerjenisMember: React.FC<TableHargaPerjenisMemberProps> = ({ plu
         { pluSatuanJual, barcode }
     );
 
-    console.log(HargaPerjenisMember);
-
     return (
         <div className="h-full shadow-xl">
             {loading && <p className="text-blue-500">Memuat data...</p>}
