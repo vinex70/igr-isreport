@@ -9,7 +9,7 @@ import ModalSettingHarga from "./modal-setting-harga";
 type TableSatuanJualProps = {
     plu: string | undefined;
     barcode: string | undefined;
-    onSubmit: (data: SatuanJualItem) => void
+    onSubmit?: (data: SatuanJualItem) => void
 };
 
 interface SatuanJualItem {
@@ -146,7 +146,7 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
 
                     <table className="table w-full">
                         <thead>
-                            <tr className="border text-sm">
+                            <tr className="border text-white text-sm">
                                 <th className="text-center border bg-blue-400" rowSpan={2}>#</th>
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Satuan</th>
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Acost</th>
@@ -156,7 +156,7 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                 <th className="border text center bg-red-400" colSpan={2}>Setting</th>
                                 <th className="border text center bg-blue-400" rowSpan={2}>Add</th>
                             </tr>
-                            <tr className="border text-sm">
+                            <tr className="border text-white text-sm">
                                 <th className="p-2 border bg-green-400">Hrg</th>
                                 <th className="p-2 border bg-green-400">Mrg</th>
                                 <th className="p-2 border bg-green-400">Awal</th>
@@ -172,18 +172,18 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                 const hargaNettoBaru = HandleNettoBaru(prd);
 
                                 return (
-                                    <tr key={prd.prd_prdcd} className="border text-xs">
-                                        <td className="p-2 border text-center">{prd.prd_prdcd.slice(-1)}</td>
-                                        <td className="p-2 border text-center">{prd.prd_unit + " / " + prd.prd_frac}</td>
-                                        <td className="p-2 border text-end">{FormatNumbers(prd.prd_avgcost)}</td>
-                                        <td className="p-2 border text-end">{FormatNumbers(prd.prd_hrgjual)}</td>
-                                        <td className="p-2 border text-end">{calculateMargin(hargaNettoValue, prd.prd_avgcost)}</td>
-                                        <td className="p-2 border text-end">{FormatNumbers(prd.prmd_hrgjual)}</td>
-                                        <td className="p-2 border text-end">{calculateMargin(hargaNettoValueMd, prd.prd_avgcost)}</td>
-                                        <td className="p-2 border text-center">{formatDate(prd.prmd_tglawal)}</td>
-                                        <td className="p-2 border text-center">{formatDate(prd.prmd_tglakhir)}</td>
+                                    <tr key={prd.prd_prdcd} className="border text-sm">
+                                        <td className="p-1 border text-center">{prd.prd_prdcd.slice(-1)}</td>
+                                        <td className="p-1 border text-center">{prd.prd_unit + " / " + prd.prd_frac}</td>
+                                        <td className="p-1 border text-end">{FormatNumbers(prd.prd_avgcost)}</td>
+                                        <td className="p-1 border text-end">{FormatNumbers(prd.prd_hrgjual)}</td>
+                                        <td className="p-1 border text-end">{calculateMargin(hargaNettoValue, prd.prd_avgcost)}</td>
+                                        <td className="p-1 border text-end">{FormatNumbers(prd.prmd_hrgjual)}</td>
+                                        <td className="p-1 border text-end">{calculateMargin(hargaNettoValueMd, prd.prd_avgcost)}</td>
+                                        <td className="p-1 border text-center">{formatDate(prd.prmd_tglawal)}</td>
+                                        <td className="p-1 border text-center">{formatDate(prd.prmd_tglakhir)}</td>
                                         {/* Input setting harga */}
-                                        <td className="p-2 border text-center">
+                                        <td className="p-1 border text-center">
                                             <input
                                                 type="text"
                                                 className={`w-24 text-end ${hargaInputs[prd.prd_prdcd] ? "bg-green-200" : ""}`}
@@ -192,13 +192,13 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                             />
                                         </td>
 
-                                        <td className="p-2 border text-center">
-                                            {(hargaNettoBaru ? `${calculateMargin(hargaNettoBaru, prd.prd_avgcost)} %` : "")}
+                                        <td className="p-1 border text-center">
+                                            {(hargaNettoBaru ? calculateMargin(hargaNettoBaru, prd.prd_avgcost) : calculateMargin(hargaNettoValue, prd.prd_avgcost))}
                                         </td>
 
-                                        <td className="p-2 border text-center">
+                                        <td className="p-1 border text-center">
                                             <button
-                                                className={`${hargaInputs[prd.prd_prdcd] ? "bg-blue-500 hover:bg-blue-700" : "bg-gray-500 cursor-not-allowed"} text-white font-bold p-2 rounded`}
+                                                className={`${hargaInputs[prd.prd_prdcd] ? "bg-blue-500 hover:bg-blue-700" : "bg-gray-500 cursor-not-allowed"} text-white font-bold p-1 rounded`}
                                                 onClick={() => handleAdd(prd)}
                                                 disabled={!hargaInputs[prd.prd_prdcd]}
                                             >

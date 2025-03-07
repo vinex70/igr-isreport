@@ -3,6 +3,7 @@ import PromoForm from "@/pages/informasi-promosi/PromoForm";
 import { PromoFormValues } from "@/schemas/schemaInformasiProduk";
 import TableStock from "./table-stock";
 import TableSatuanJual from "./table-satuan-jual";
+import TableHargaPerjenisMember from "./table-harga-perjenis-member";
 
 const InformasiPromosi: React.FC = () => {
     const [formData, setFormData] = useState<PromoFormValues | null>(null);
@@ -25,15 +26,10 @@ const InformasiPromosi: React.FC = () => {
                             {formData && (
                                 <>
                                     {/* Table Promo Md */}
-                                    <div className="">
-                                        <TableSatuanJual plu={formData.plu} barcode={formData.barcode} />
-                                    </div>
+                                    <TableSatuanJual plu={formData.plu} barcode={formData.barcode} />
+
                                     {/* Table Harga Jual */}
-                                    <div className="p-4 border rounded-md bg-gray-100">
-                                        <h2 className="text-lg font-semibold text-gray-700">Table Harga Jual:</h2>
-                                        <p><strong>PLU:</strong> {formData.plu}</p>
-                                        <p><strong>Barcode:</strong> {formData.barcode}</p>
-                                    </div>
+                                    <TableHargaPerjenisMember plu={formData.plu} barcode={formData.barcode} />
                                 </>
                             )}
                         </div>

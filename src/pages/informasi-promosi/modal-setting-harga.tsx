@@ -162,7 +162,7 @@ const ModalSettingHarga: React.FC<ModalLokasiProps> = ({ isOpen, onClose, produc
                                 return (
                                     <tr key={pluKey} className="border text-xs">
                                         <td className="border p-2 text-center">{index + 1}</td>
-                                        <td className="border p-2 text-center">{pluKey + "0"}</td>
+                                        <td className="border p-2 text-center">{firstItem?.prd_prdcd}</td>
                                         <td className="border p-2">{firstItem?.prd_deskripsipanjang || "-"}</td>
                                         <td className="border p-2 text-center">{firstItem ? `${firstItem.prd_unit}/${firstItem.prd_frac}` : "-"}</td>
                                         <td className="border p-2 text-right">{FormatNumbers(firstItem?.prd_avgcost || "-")}</td>
