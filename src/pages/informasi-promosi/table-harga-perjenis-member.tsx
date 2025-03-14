@@ -50,13 +50,13 @@ const TableHargaPerjenisMember: React.FC<TableHargaPerjenisMemberProps> = ({ plu
                             <tr className="text-center text-sm border">
                                 <th className="text-white border bg-red-500">Harga</th>
                                 <th className="text-white border bg-red-500">Cb</th>
-                                <th className="text-white border bg-red-500">Harga Net</th>
+                                <th className="text-white border bg-red-500">Net</th>
                                 <th className="text-white border bg-blue-500">Harga</th>
                                 <th className="text-white border bg-blue-500">Cb</th>
-                                <th className="text-white border bg-blue-500">Harga Net</th>
+                                <th className="text-white border bg-blue-500">Net</th>
                                 <th className="text-white border bg-zinc-600">Harga</th>
                                 <th className="text-white border bg-zinc-600">Cb</th>
-                                <th className="text-white border bg-zinc-600">Harga Net</th>
+                                <th className="text-white border bg-zinc-600">Net</th>
                             </tr>
                         </thead>
                         <tbody>

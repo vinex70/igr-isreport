@@ -47,10 +47,10 @@ interface PromoGiftItem {
 
 
 const TablePromoGift: React.FC<TablePromoGiftProps> = ({ plu, barcode }) => {
-
+    const pluSatuanJual = plu?.slice(0, 6) || "";
     const { data: PromoGift, loading, error } = useFetchDatas<PromoGiftItem[]>(
         "/api/informasi-promosi/promo-gift",
-        { plu, barcode }
+        { pluSatuanJual, barcode }
     );
 
     const jenisMember = (item: PromoGiftItem) => {

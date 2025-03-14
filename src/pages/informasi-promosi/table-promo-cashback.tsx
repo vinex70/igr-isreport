@@ -46,10 +46,10 @@ interface PromoCashbackItem {
 
 
 const TablePromoCashback: React.FC<TablePromoCashbackProps> = ({ plu, barcode }) => {
-
+    const pluSatuanJual = plu?.slice(0, 6) || "";
     const { data: PromoCashback, loading, error } = useFetchDatas<PromoCashbackItem[]>(
         "/api/informasi-promosi/promo-cashback",
-        { plu, barcode }
+        { pluSatuanJual, barcode }
     );
 
     const jenisMember = (item: PromoCashbackItem) => {
@@ -69,7 +69,7 @@ const TablePromoCashback: React.FC<TablePromoCashbackProps> = ({ plu, barcode })
         }
 
         return arrayJenisMember.length > 0 ? (
-            <div className="flex justify-around">
+            <div className="flex justify-around items-center">
                 {arrayJenisMember}
             </div>
         ) : null;
@@ -136,21 +136,21 @@ const TablePromoCashback: React.FC<TablePromoCashbackProps> = ({ plu, barcode })
                         <tbody>
                             {PromoCashback.map((item) => (
                                 <tr className="text-center text-sm border" key={item.cbd_kodepromosi.concat(item.cbd_prdcd)}>
-                                    <td className="border p-2">{item.cbd_kodepromosi}</td>
-                                    <td className="border p-2">{item.cbh_namapromosi}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_minstruk)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbh_minrphprodukpromo)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbh_mintotbelanja)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_cashback)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.alokasi)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.alokasi_keluar)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbk_sisa)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_maxstruk)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_maxmemberperhari)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_maxfrekperevent)}</td>
-                                    <td className="border p-2">{FormatNumbers(item.cbd_maxrphperevent)}</td>
-                                    <td className="border p-2">{formatDate(item.cbh_tglawal)}</td>
-                                    <td className="border p-2">{formatDate(item.cbh_tglakhir)}</td>
+                                    <td className="border p-1">{item.cbd_kodepromosi}</td>
+                                    <td className="border p-1">{item.cbh_namapromosi}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_minstruk)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbh_minrphprodukpromo)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbh_mintotbelanja)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_cashback)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.alokasi)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.alokasi_keluar)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbk_sisa)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_maxstruk)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_maxmemberperhari)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_maxfrekperevent)}</td>
+                                    <td className="border p-1">{FormatNumbers(item.cbd_maxrphperevent)}</td>
+                                    <td className="border p-1">{formatDate(item.cbh_tglawal)}</td>
+                                    <td className="border p-1">{formatDate(item.cbh_tglakhir)}</td>
                                     <td className="border">{jenisMember(item)}</td>
                                     <td className="border">{flagPromo(item)}</td>
                                 </tr>
