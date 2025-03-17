@@ -7,6 +7,7 @@ import TableHargaPerjenisMember from "./table-harga-perjenis-member";
 import TablePromoCashback from "./table-promo-cashback";
 import TablePromoGift from "./table-promo-gift";
 import TablePromoInstore from "./table-promo-instore";
+import TablePromoHjk from "./table-promo-hjk";
 
 const InformasiPromosi: React.FC = () => {
     const [formData, setFormData] = useState<PromoFormValues | null>(null);
@@ -82,11 +83,7 @@ const InformasiPromosi: React.FC = () => {
 
                     <div className={`transition-all duration-500 ease-in-out ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'} space-y-5`}>
                         {/* Table Promo HJK */}
-                        <div className="p-4 border rounded-md bg-gray-100">
-                            <h2 className="text-lg font-semibold text-gray-700">Promo HJK:</h2>
-                            <p><strong>PLU:</strong> {formData.plu}</p>
-                            <p><strong>Barcode:</strong> {formData.barcode}</p>
-                        </div>
+                        <TablePromoHjk plu={formData.plu} barcode={formData.barcode} />
                     </div>
                 </div>
             )

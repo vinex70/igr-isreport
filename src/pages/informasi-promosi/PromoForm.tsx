@@ -33,6 +33,7 @@ const PromoForm: React.FC<PromoFormProps> = ({ onSubmitForm }) => {
 
     const onSubmit = (data: PromoFormValues) => {
         onSubmitForm(data);
+        reset();
     };
 
     return (
