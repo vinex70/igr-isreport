@@ -24,6 +24,7 @@ type StockItem = {
     dep_namadepartement: string;
     prd_kodekategoribarang: string;
     kat_namakategori: string;
+    flag: string;
 };
 
 // Daftar modal yang tersedia
@@ -58,91 +59,96 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
     };
 
     return (
-        <div className="border rounded-md bg-gray-50 h-full shadow-xl">
+        <div className="border rounded-md bg-gray-50 max-h-full shadow-xl">
             {loading && <p className="text-blue-500">Memuat data...</p>}
             {error && <p className="text-red-500">{error}</p>}
 
             {!loading && !error && stockData && stockData.length > 0 && (
-                <div className="border">
+                <div>
                     {stockData.map((item) => (
-                        <div key={item.prd_prdcd}>
-                            {/* Kolom PLU */}
-                            <div className="grid grid-cols-3 border">
-                                <div className="col-span-1 border-r">
-                                    <div className="grid grid-cols-2 border-b">
-                                        <div className="p-2 font-medium border-r bg-gray-200">PLU IGR</div>
-                                        <div className="p-2">{item.prd_prdcd}</div>
+                        <div key={item.prd_prdcd} className="flex flex-col justify-between border h-fit">
+                            <div className="flex-1">
+                                {/* Kolom PLU */}
+                                <div className="grid grid-cols-3 border">
+                                    <div className="col-span-1 border-r">
+                                        <div className="grid grid-cols-2 border-b">
+                                            <div className="p-2 font-medium border-r bg-gray-200">PLU IGR</div>
+                                            <div className="p-2">{item.prd_prdcd}</div>
+                                        </div>
+                                        <div className="grid grid-cols-2">
+                                            <div className="p-2 font-medium border-r bg-gray-200">PLU OMI</div>
+                                            <div className="p-2">{item.prc_pluomi}</div>
+                                        </div>
                                     </div>
-                                    <div className="grid grid-cols-2">
-                                        <div className="p-2 font-medium border-r bg-gray-200">PLU OMI</div>
-                                        <div className="p-2">{item.prc_pluomi}</div>
+
+                                    {/* Kolom Deskripsi */}
+                                    <div className="col-span-2 flex items-center justify-center p-2">
+                                        <h1 className="text-center">{item.prd_deskripsipanjang}</h1>
                                     </div>
                                 </div>
 
-                                {/* Kolom Deskripsi */}
-                                <div className="col-span-2 flex items-center justify-center p-2">
-                                    <h1 className="text-center">{item.prd_deskripsipanjang}</h1>
+                                {/* Kolom Stock */}
+                                <div className="flex border w-full text-center">
+                                    <div className="flex-1 p-4 border-r">
+                                        <h1 className="text-4xl font-semibold">Stock</h1>
+                                    </div>
+                                    <div className="flex-1 p-4 border-r flex items-center justify-center text-4xl">
+                                        {Math.floor(item.prd_stock / item.prd_frac)} .Ctn
+                                    </div>
+                                    <div className="flex-1 p-4 flex items-center justify-center text-4xl">
+                                        {item.prd_stock % item.prd_frac} .Pcs
+                                    </div>
+                                </div>
+
+                                {/* Kolom Avg Sales dan Pb Out */}
+                                <div className="flex border w-full text-center">
+                                    <div className="flex-1 p-2 border-r">
+                                        <h1>Avg Sales</h1>
+                                    </div>
+                                    <div className="flex-1 p-2 flex items-center justify-center border-r">
+                                        {FormatNumbers(item.avg_sales)}
+                                    </div>
+                                    <div className="flex-1 p-2 border-r">
+                                        <h1>Pb Out</h1>
+                                    </div>
+                                    <div className={`flex-1 p-2 flex items-center justify-center ${item.pb_out === null ? "text-red-500" : ""}`}>
+                                        {item.pb_out === null ? 0 : FormatNumbers(item.pb_out)}
+                                    </div>
+                                </div>
+
+                                {/* Kolom div dept katb */}
+                                <div className="flex items-center justify-center border w-full p-4 text-xs">
+                                    ({item.prd_kodedivisi}) - {item.div_namadivisi},
+                                    ({item.prd_kodedepartement}) - {item.dep_namadepartement},
+                                    ({item.prd_kodekategoribarang}) - {item.kat_namakategori}
+                                </div>
+
+                                {/* Tombol untuk membuka modal */}
+                                <div className="flex justify-center p-2 gap-2 border">
+                                    <button
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        onClick={() => handleOpenModal("lokasi", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                    >
+                                        Lokasi
+                                    </button>
+
+                                    <button
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        onClick={() => handleOpenModal("soic", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                    >
+                                        So Ic
+                                    </button>
+
+                                    <button
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        onClick={() => handleOpenModal("pb", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                    >
+                                        Pb
+                                    </button>
                                 </div>
                             </div>
-
-                            {/* Kolom Stock */}
-                            <div className="flex border w-full text-center">
-                                <div className="flex-1 p-4 border-r">
-                                    <h1 className="text-3xl font-semibold">Stock</h1>
-                                </div>
-                                <div className="flex-1 p-4 border-r flex items-center justify-center text-3xl">
-                                    {Math.floor(item.prd_stock / item.prd_frac)} .Ctn
-                                </div>
-                                <div className="flex-1 p-4 flex items-center justify-center text-3xl">
-                                    {item.prd_stock % item.prd_frac} .Pcs
-                                </div>
-                            </div>
-
-                            {/* Kolom Avg Sales dan Pb Out */}
-                            <div className="flex border w-full text-center">
-                                <div className="flex-1 p-2 border-r">
-                                    <h1>Avg Sales</h1>
-                                </div>
-                                <div className="flex-1 p-2 flex items-center justify-center">
-                                    Rp. {FormatNumbers(item.avg_sales)}
-                                </div>
-                                <div className="flex-1 p-2 border-r">
-                                    <h1>Pb Out</h1>
-                                </div>
-                                <div className={`flex-1 p-2 flex items-center justify-center ${item.pb_out === null ? "text-red-500" : ""}`}>
-                                    {item.pb_out === null ? 0 : FormatNumbers(item.pb_out)}
-                                </div>
-                            </div>
-
-                            {/* Kolom div dept katb */}
-                            <div className="flex items-center justify-center border w-full p-4 text-xs">
-                                ({item.prd_kodedivisi}) - {item.div_namadivisi},
-                                ({item.prd_kodedepartement}) - {item.dep_namadepartement},
-                                ({item.prd_kodekategoribarang}) - {item.kat_namakategori}
-                            </div>
-
-                            {/* Tombol untuk membuka modal */}
-                            <div className="flex justify-center p-2 gap-2">
-                                <button
-                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
-                                    onClick={() => handleOpenModal("lokasi", item.prd_prdcd, item.prd_deskripsipanjang)}
-                                >
-                                    Lokasi
-                                </button>
-
-                                <button
-                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
-                                    onClick={() => handleOpenModal("soic", item.prd_prdcd, item.prd_deskripsipanjang)}
-                                >
-                                    So Ic
-                                </button>
-
-                                <button
-                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
-                                    onClick={() => handleOpenModal("pb", item.prd_prdcd, item.prd_deskripsipanjang)}
-                                >
-                                    Pb
-                                </button>
+                            <div className="flex justify-center bg-gray-200 p-1">
+                                <h1>{item.flag}</h1>
                             </div>
                         </div>
                     ))}

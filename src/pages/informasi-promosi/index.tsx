@@ -35,15 +35,17 @@ const InformasiPromosi: React.FC = () => {
 
     return (
         <section className="container mx-auto mb-10">
-            <div className="space-y-5 my-5">
+            <div className="space-y-5 my-5 max-h-[600px]">
                 <h1 className="text-2xl font-bold text-blue-500">
                     Informasi Promosi - Produk
                 </h1>
+
+                {/* Form Input */}
+                <PromoForm onSubmitForm={handleFormSubmit} />
                 <div className="flex space-x-5">
                     <div className="w-3/4">
                         <div className="space-y-5">
-                            {/* Form Input */}
-                            <PromoForm onSubmitForm={handleFormSubmit} />
+
                             {formData && (
                                 <>
                                     {/* Table Promo Md */}

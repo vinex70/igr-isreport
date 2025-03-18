@@ -17,24 +17,33 @@ const PromoForm: React.FC<PromoFormProps> = ({ onSubmitForm }) => {
         register,
         handleSubmit,
         reset,
-        setValue, // <-- Gunakan setValue untuk mengisi input PLU
+        setValue,
         formState: { errors },
     } = useForm<PromoFormValues>({
         resolver: zodResolver(promoSchema),
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [lastInputData, setLastInputData] = useState<PromoFormValues | null>(null);
 
     // Function untuk menangkap kode PLU dari modal
     const onSelectProduct = (kodeplu: string) => {
-        setValue("plu", kodeplu); // Isi input PLU
-        setIsModalOpen(false); // Tutup modal setelah memilih
+        setValue("plu", kodeplu);
+        setIsModalOpen(false);
     };
 
     const onSubmit = (data: PromoFormValues) => {
+        // setLastInputData(data); // Simpan input terakhir sebelum reset
         onSubmitForm(data);
         reset();
     };
+
+    // Function untuk menjalankan submit ulang dengan data terakhir
+    // const handleRefresh = () => {
+    //     if (lastInputData) {
+    //         onSubmit(lastInputData);
+    //     }
+    // };
 
     return (
         <>
@@ -51,7 +60,7 @@ const PromoForm: React.FC<PromoFormProps> = ({ onSubmitForm }) => {
                             className="w-full border border-r-0 py-2 pl-12 rounded-l-md"
                         />
                         <button
-                            type="button" // Agar tidak trigger submit
+                            type="button"
                             onClick={() => setIsModalOpen(true)}
                             className="flex items-center p-2 border bg-gray-200 rounded-r-md"
                         >
@@ -68,23 +77,30 @@ const PromoForm: React.FC<PromoFormProps> = ({ onSubmitForm }) => {
                             error={errors.barcode?.message}
                         />
                     </div>
-                </div>
 
-                <div className="flex space-x-5">
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-                        Submit
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => reset()}
-                        className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-                    >
-                        Reset
-                    </button>
+                    <div className="flex space-x-2">
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                            Submit
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => reset()}
+                            className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                        >
+                            Reset
+                        </button>
+                        {/* <button
+                            type="button"
+                            onClick={handleRefresh}
+                            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                        >
+                            Refresh
+                        </button> */}
+                    </div>
                 </div>
             </form>
 
-            {/* Gunakan komponen Modal */}
+            {/* Modal Search Produk */}
             <SerchProduk isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSelect={onSelectProduct} />
         </>
     );
