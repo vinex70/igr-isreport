@@ -5,6 +5,7 @@ import ModalLokasi from "@/pages/informasi-promosi/modal-lokasi";
 import ModalSoIc from "@/pages/informasi-promosi/modal-soic";
 import ModalPbPoBtbt from "./modal-pb-po-btb";
 import ModalPenerimaan from "./modal-penerimaan";
+import ModalTrendSales from "./modal-sales";
 
 type TableStockProps = {
     plu: string | undefined;
@@ -34,6 +35,7 @@ const modals = {
     pb: ModalPbPoBtbt,
     soic: ModalSoIc,
     penerimaan: ModalPenerimaan,
+    sales: ModalTrendSales
 } as const;
 
 type ModalType = keyof typeof modals;
@@ -127,6 +129,13 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
 
                                 {/* Tombol untuk membuka modal */}
                                 <div className="flex justify-center p-2 gap-2 border">
+                                    <button
+                                        className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        onClick={() => handleOpenModal("sales", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                    >
+                                        Sales
+                                    </button>
+
                                     <button
                                         className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
                                         onClick={() => handleOpenModal("lokasi", item.prd_prdcd, item.prd_deskripsipanjang)}
