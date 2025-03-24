@@ -4,6 +4,7 @@ import useFetchDatas from "@/hooks/useFetchDatas";
 import ModalLokasi from "@/pages/informasi-promosi/modal-lokasi";
 import ModalSoIc from "@/pages/informasi-promosi/modal-soic";
 import ModalPbPoBtbt from "./modal-pb-po-btb";
+import ModalPenerimaan from "./modal-penerimaan";
 
 type TableStockProps = {
     plu: string | undefined;
@@ -32,6 +33,7 @@ const modals = {
     lokasi: ModalLokasi,
     pb: ModalPbPoBtbt,
     soic: ModalSoIc,
+    penerimaan: ModalPenerimaan,
 } as const;
 
 type ModalType = keyof typeof modals;
@@ -126,24 +128,30 @@ const TableStock: React.FC<TableStockProps> = ({ plu, barcode }) => {
                                 {/* Tombol untuk membuka modal */}
                                 <div className="flex justify-center p-2 gap-2 border">
                                     <button
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
                                         onClick={() => handleOpenModal("lokasi", item.prd_prdcd, item.prd_deskripsipanjang)}
                                     >
                                         Lokasi
                                     </button>
 
                                     <button
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
                                         onClick={() => handleOpenModal("soic", item.prd_prdcd, item.prd_deskripsipanjang)}
                                     >
                                         So Ic
                                     </button>
 
                                     <button
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
                                         onClick={() => handleOpenModal("pb", item.prd_prdcd, item.prd_deskripsipanjang)}
                                     >
                                         Pb
+                                    </button>
+                                    <button
+                                        className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                                        onClick={() => handleOpenModal("penerimaan", item.prd_prdcd, item.prd_deskripsipanjang)}
+                                    >
+                                        BTB
                                     </button>
                                 </div>
                             </div>

@@ -152,6 +152,7 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Acost</th>
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Hrg</th>
                                 <th className="text-center border bg-blue-400" rowSpan={2}>Mrg</th>
+                                <th className="text-center border bg-blue-400" rowSpan={2}>Tag</th>
                                 <th className="border text center bg-green-400" colSpan={4}>Promo MD</th>
                                 <th className="border text center bg-red-400" colSpan={2}>Setting</th>
                                 <th className="border text center bg-blue-400" rowSpan={2}>Action</th>
@@ -178,6 +179,7 @@ const TableSatuanJual: React.FC<TableSatuanJualProps> = ({ plu, barcode, onSubmi
                                         <td className="p-1 border text-end">{FormatNumbers(prd.prd_avgcost)}</td>
                                         <td className="p-1 border text-end">{FormatNumbers(prd.prd_hrgjual)}</td>
                                         <td className="p-1 border text-end">{calculateMargin(hargaNettoValue, prd.prd_avgcost)}</td>
+                                        <td className="p-1 border text-center">{prd.prd_kodetag}</td>
                                         <td className="p-1 border text-end">{FormatNumbers(prd.prmd_hrgjual)}</td>
                                         <td className="p-1 border text-end">{calculateMargin(hargaNettoValueMd, prd.prd_avgcost)}</td>
                                         <td className="p-1 border text-center">{formatDate(prd.prmd_tglawal)}</td>

@@ -135,7 +135,7 @@ const TablePromoCashback: React.FC<TablePromoCashbackProps> = ({ plu, barcode })
                         </thead>
                         <tbody>
                             {PromoCashback.map((item) => (
-                                <tr className="text-center text-sm border" key={item.cbd_kodepromosi.concat(item.cbd_prdcd)}>
+                                <tr className="text-center text-sm border" key={item.cbd_kodepromosi}>
                                     <td className="border p-1">{item.cbd_kodepromosi}</td>
                                     <td className="border p-1">{item.cbh_namapromosi}</td>
                                     <td className="border p-1">{FormatNumbers(item.cbd_minstruk)}</td>
