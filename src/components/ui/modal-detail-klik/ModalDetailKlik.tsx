@@ -82,14 +82,17 @@ const ModalDetailKlik: React.FC<ModalDetailProps> = ({ isOpen, onClose, obiKey }
                         <div className="text-left mr-4">
                             <h2 className="text-md font-bold">Member</h2>
                             <h2 className="text-md font-bold">Item Order</h2>
+                            <h2 className="text-md font-bold">Packing By</h2>
                         </div>
                         <div>
+                            <h2 className="text-md font-bold mx-2">:</h2>
                             <h2 className="text-md font-bold mx-2">:</h2>
                             <h2 className="text-md font-bold mx-2">:</h2>
                         </div>
                         <div className="text-left">
                             <h2 className="text-md font-bold text-wrap">{detailData[0]?.obi_kdmember} - {detailData[0]?.cus_namamember}</h2>
                             <h2 className="text-md font-bold">{detailData.length}</h2>
+                            <h2 className="text-md font-bold">{detailData[0]?.packing_by}</h2>
                         </div>
                     </div>
                     {/* Tengah */}

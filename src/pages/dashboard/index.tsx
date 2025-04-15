@@ -198,6 +198,7 @@ const Dashboard: React.FC = () => {
                             <th className="border px-4 py-2" rowSpan={2}>No</th>
                             <th className="border px-4 py-2" rowSpan={2}>Status</th>
                             <th className="border px-4 py-2" colSpan={2}>PB</th>
+                            <th className="border px-4 py-2" colSpan={2}>DSP</th>
                             <th className="border px-4 py-2" rowSpan={2}>Trx</th>
                             <th className="border px-4 py-2" rowSpan={2}>Kode Member</th>
                             <th className="border px-4 py-2" colSpan={2}>Item</th>
@@ -207,6 +208,8 @@ const Dashboard: React.FC = () => {
                             <th className="border px-4 py-2" rowSpan={2}>Action</th>
                         </tr>
                         <tr>
+                            <th className="border px-4 py-2">Tgl</th>
+                            <th className="border px-4 py-2">Jam</th>
                             <th className="border px-4 py-2">Tgl</th>
                             <th className="border px-4 py-2">Jam</th>
                             <th className="border px-4 py-2">Order</th>
@@ -235,6 +238,14 @@ const Dashboard: React.FC = () => {
                                     <td className="border border-gray-300 text-center px-4 py-2">{new Date(item.obi_tglpb).toLocaleDateString('id-ID')}</td>
                                     <td className="border border-gray-300 text-center px-4 py-2">
                                         {new Date(item.obi_createdt).toLocaleTimeString('id-ID', {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                        }).replace(/\./g, ':')}
+                                    </td>
+                                    <td className="border border-gray-300 text-center px-4 py-2">{item.obi_draftstruk && new Date(item.obi_draftstruk).toLocaleDateString('id-ID')}</td>
+                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                        {item.obi_draftstruk && new Date(item.obi_draftstruk).toLocaleTimeString('id-ID', {
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             second: '2-digit',
