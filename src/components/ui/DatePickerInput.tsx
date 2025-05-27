@@ -43,9 +43,15 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
     // Handle perubahan tanggal
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
-        setValue(name, date ? date.toLocaleDateString().split("T")[0] : null, {
-            shouldValidate: true,
-        });
+        setValue(
+            name,
+            date
+                ? `${date.getFullYear()}-${(date.getMonth() + 1)
+                    .toString()
+                    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+                : null,
+            { shouldValidate: true }
+        );
     };
 
     // Buka kalender
