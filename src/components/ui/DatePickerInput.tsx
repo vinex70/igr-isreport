@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormContext, FieldError } from "react-hook-form";
@@ -9,9 +9,9 @@ interface DatePickerInputProps {
     label?: string;
     error?: FieldError;
     className?: string;
-    minDate?: Date; // Tanggal minimum yang diizinkan
-    maxDate?: Date; // Tanggal maksimum yang diizinkan
-    placeholder?: string; // Placeholder kustom
+    minDate?: Date;
+    maxDate?: Date;
+    placeholder?: string;
 }
 
 const DatePickerInput: React.FC<DatePickerInputProps> = ({
@@ -28,11 +28,10 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         watchedValue ? new Date(watchedValue) : null
     );
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const datePickerRef = useRef<DatePicker>(null); // For focusing
 
-    // Sinkronisasi nilai form dengan state
     useEffect(() => {
-        register(name); // Register input ke react-hook-form
+        register(name);
         if (!watchedValue) {
             setSelectedDate(null);
         } else {
@@ -40,41 +39,35 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
         }
     }, [watchedValue, register, name]);
 
-    // Handle perubahan tanggal
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
         setValue(
             name,
             date
-                ? `${date.getFullYear()}-${(date.getMonth() + 1)
+                ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+                    .getDate()
                     .toString()
-                    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+                    .padStart(2, "0")}`
                 : null,
             { shouldValidate: true }
         );
     };
 
-    // Buka kalender
-    const openCalendar = () => {
-        setIsCalendarOpen(true);
-    };
-
-    // Tutup kalender
-    const closeCalendar = () => {
-        setIsCalendarOpen(false);
-    };
-
-    // Hapus tanggal yang dipilih
     const clearDate = (e: React.MouseEvent) => {
-        e.stopPropagation(); // Mencegah event bubbling ke container
+        e.stopPropagation();
         setSelectedDate(null);
         setValue(name, null, { shouldValidate: true });
     };
 
+    const openCalendar = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        datePickerRef.current?.setFocus();
+    };
+
     return (
         <div
-            className={`${className ?? "flex p-2 rounded-lg border flex-col items-center w-full focus-within:border-blue-500"} cursor-pointer`}
-            onClick={openCalendar} // Buka kalender saat container diklik
+            className={`${className ?? "flex p-2 rounded-lg border flex-col items-center w-full focus-within:border-blue-500"
+                }`}
         >
             {label && (
                 <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
@@ -84,6 +77,7 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
             <div className="relative w-full">
                 <DatePicker
                     id={name}
+                    ref={datePickerRef}
                     selected={selectedDate}
                     onChange={handleDateChange}
                     dateFormat="dd-MMM-yyyy"
@@ -95,10 +89,8 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
                     showYearDropdown
                     dropdownMode="select"
                     autoComplete="off"
-                    open={isCalendarOpen}
-                    onCalendarClose={closeCalendar} // Tutup kalender saat pengguna mengklik di luar
-                    minDate={minDate} // Tanggal minimum
-                    maxDate={maxDate} // Tanggal maksimum
+                    minDate={minDate}
+                    maxDate={maxDate}
                     className="w-full pr-10 cursor-pointer focus:outline-none"
                 />
                 <div className="absolute top-1 right-5 flex items-center space-x-2">
@@ -110,7 +102,7 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
                     )}
                     <FiCalendar
                         className="text-lg text-gray-500 cursor-pointer hover:text-blue-500"
-                        onClick={openCalendar} // Buka kalender saat ikon diklik
+                        onClick={openCalendar}
                     />
                 </div>
             </div>
