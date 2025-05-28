@@ -28,7 +28,7 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         watchedValue ? new Date(watchedValue) : null
     );
-    const datePickerRef = useRef<DatePicker>(null); // For focusing
+    const datePickerRef = useRef<DatePicker | null>(null); // For focusing
 
     useEffect(() => {
         register(name);
