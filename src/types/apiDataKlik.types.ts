@@ -31,4 +31,7 @@ export interface ApiDataKlik {
     total_order: number;
     obi_draftstruk: string;
     packing_by: string;
+    ekspedisi: string;
+    obi_ttlorder: number;
+    obi_realorder: number;
 };

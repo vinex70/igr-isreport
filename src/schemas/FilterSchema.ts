@@ -6,4 +6,5 @@ export const filterKlikSchema = z.object({
     status: z.string().optional(),
     trxPb: z.string().optional(),
     obi_shippingservice: z.string().optional(),
+    ekspedisi: z.string().toUpperCase().optional(),
 })

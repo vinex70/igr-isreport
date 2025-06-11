@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,21 +22,23 @@ const ListPga = () => {
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     // Function to handle keyboard shortcuts
-    const handleShortcut = (action: string) => {
+    const navigate = useNavigate();
+
+    const handleShortcut = useCallback((action: string) => {
         switch (action) {
             case "settings":
-                alert("Settings shortcut triggered!"); // Ganti dengan aksi yang diinginkan
+                alert("Settings shortcut triggered!");
                 break;
             case "evaluasi-sales":
-                window.location.href = "/cpg-vite/evaluasi-sales";
+                navigate("/evaluasi-sales");
                 break;
             case "informasi-promosi":
-                window.location.href = "/cpg-vite/informasi-promosi";
+                navigate("/informasi-promosi");
                 break;
             default:
                 break;
         }
-    };
+    }, [navigate]);
 
     useKeyboardShortcuts(handleShortcut);
 

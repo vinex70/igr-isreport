@@ -161,6 +161,43 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div>
+                    <label htmlFor="ekspedisi" className="block text-sm font-medium mb-1">
+                        Ekspedisi:
+                    </label>
+                    <select
+                        id="ekspedisi"
+                        {...register("ekspedisi")}
+                        className="border rounded px-2 py-1"
+                    >
+                        <option value="">All</option>
+                        <option value="mobil">Mobil</option>
+                        <option value="motor">Motor</option>
+                        <option value="amtok">Amtok</option>
+                    </select>
+                    {errors.status && (
+                        <p className="text-red-500 text-sm">{errors.status.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <label htmlFor="obi_shippingservice" className="block text-sm font-medium mb-1">
+                        Service:
+                    </label>
+                    <select
+                        id="obi_shippingservice"
+                        {...register("obi_shippingservice")}
+                        className="border rounded px-2 py-1"
+                    >
+                        <option value="">All</option>
+                        <option value="NEXTDAY">NEXTDAY</option>
+                        <option value="SAMEDAY">SAMEDAY</option>
+                    </select>
+                    {errors.status && (
+                        <p className="text-red-500 text-sm">{errors.status.message}</p>
+                    )}
+                </div>
+
+                <div>
                     <label htmlFor="trxPb" className="block text-sm font-medium mb-1">
                         Trx:
                     </label>
@@ -192,28 +229,32 @@ const Dashboard: React.FC = () => {
                 <p>No data to display. Apply filters to load data.</p>
             )}
             {!loading && !error && data.length > 0 && (
-                <table className="table-auto my-10 border-collapse border border-gray-400 w-full">
+                <table className="table-auto my-10 border-collapse border border-gray-400 max-w-fit mx-auto">
                     <thead className="bg-blue-300">
                         <tr>
-                            <th className="border px-4 py-2" rowSpan={2}>No</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Status</th>
-                            <th className="border px-4 py-2" colSpan={2}>PB</th>
-                            <th className="border px-4 py-2" colSpan={2}>DSP</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Trx</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Kode Member</th>
-                            <th className="border px-4 py-2" colSpan={2}>Item</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Tipe</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Service</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Max Kirim</th>
-                            <th className="border px-4 py-2" rowSpan={2}>Action</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>No</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Status</th>
+                            <th className="border px-4 py-2 text-xs" colSpan={2}>PB</th>
+                            <th className="border px-4 py-2 text-xs" colSpan={2}>DSP</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Trx</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Kode Member</th>
+                            <th className="border px-4 py-2 text-xs" colSpan={2}>Item</th>
+                            <th className="border px-4 py-2 text-xs" colSpan={2}>Rupiah</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Tipe</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Ekspedisi</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Service</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Max Kirim</th>
+                            <th className="border px-4 py-2 text-xs" rowSpan={2}>Action</th>
                         </tr>
                         <tr>
-                            <th className="border px-4 py-2">Tgl</th>
-                            <th className="border px-4 py-2">Jam</th>
-                            <th className="border px-4 py-2">Tgl</th>
-                            <th className="border px-4 py-2">Jam</th>
-                            <th className="border px-4 py-2">Order</th>
-                            <th className="border px-4 py-2">Real</th>
+                            <th className="border px-4 py-2 text-xs">Tgl</th>
+                            <th className="border px-4 py-2 text-xs">Jam</th>
+                            <th className="border px-4 py-2 text-xs">Tgl</th>
+                            <th className="border px-4 py-2 text-xs">Jam</th>
+                            <th className="border px-4 py-2 text-xs">Order</th>
+                            <th className="border px-4 py-2 text-xs">Real</th>
+                            <th className="border px-4 py-2 text-xs">Order</th>
+                            <th className="border px-4 py-2 text-xs">Real</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -233,35 +274,42 @@ const Dashboard: React.FC = () => {
                                                     : ''
                                         }`}
                                 >
-                                    <td className="border border-gray-300 text-center px-4 py-2">{index + 1}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.status}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{new Date(item.obi_tglpb).toLocaleDateString('id-ID')}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{index + 1}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.status}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{new Date(item.obi_tglpb).toLocaleDateString('id-ID')}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         {new Date(item.obi_createdt).toLocaleTimeString('id-ID', {
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             second: '2-digit',
                                         }).replace(/\./g, ':')}
                                     </td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.obi_draftstruk && new Date(item.obi_draftstruk).toLocaleDateString('id-ID')}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.obi_draftstruk && new Date(item.obi_draftstruk).toLocaleDateString('id-ID')}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         {item.obi_draftstruk && new Date(item.obi_draftstruk).toLocaleTimeString('id-ID', {
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             second: '2-digit',
                                         }).replace(/\./g, ':')}
                                     </td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.trx}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.obi_kdmember}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.trx}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.obi_kdmember}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         {new Intl.NumberFormat('id-ID').format(Number(item?.obi_itemorder) || 0)}
                                     </td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         {new Intl.NumberFormat('id-ID').format(Number(item?.obi_realitem) || 0)}
                                     </td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.obi_tipebayar}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">{item.obi_shippingservice}</td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
+                                        {new Intl.NumberFormat('id-ID').format(Number(item?.obi_ttlorder) || 0)}
+                                    </td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
+                                        {new Intl.NumberFormat('id-ID').format(Number(item?.obi_realorder) || 0)}
+                                    </td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.obi_tipebayar}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.ekspedisi}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">{item.obi_shippingservice}</td>
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         {(() => {
                                             const date = new Date(item.obi_maxdeliverytime);
                                             const day = String(date.getDate()).padStart(2, '0');
@@ -273,7 +321,7 @@ const Dashboard: React.FC = () => {
                                             return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
                                         })()}
                                     </td>
-                                    <td className="border border-gray-300 text-center px-4 py-2">
+                                    <td className="border border-gray-300 text-center px-2 py-2 text-xs">
                                         <button
                                             onClick={() => handleDetailClick(item)}  // Trigger the modal with the item
                                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
