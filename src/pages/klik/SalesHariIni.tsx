@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CardDashboard from "@/components/ui/card-dashboard/CardDashboard";
 import { ApiDataKlik } from "@/types/apiDataKlik.types";
+import { FormatNumbers } from "@/utils/FormatNumbers";
 
 
-const SelesaiStruk = () => {
+const SalesHariIni = () => {
     const [data, setData] = useState<ApiDataKlik[]>([]); // Menyesuaikan tipe data menjadi array
     const [error, setError] = useState<string | null>(null);
 
@@ -12,11 +13,13 @@ const SelesaiStruk = () => {
         const baseUrl = import.meta.env.VITE_BASE_URL;
         const fetchData = async () => {
             try {
+                const today = new Date();
+                today.setDate(today.getDate());
+
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
-                        startDate: new Date().toISOString().split('T')[0],
-                        status: 6,
-                        flagTmi: "N",
+                        tglStruk: today.toISOString().split('T')[0],
+                        flagTmi: "N"
                     }
                 });
 
@@ -70,15 +73,18 @@ const SelesaiStruk = () => {
         );
     };
 
+    const total = data?.reduce(
+        (sum, item) => sum + Number(item.obi_realorder),
+        0
+    ) ?? 0;
+
     const content = error
         ? error
-        : data && data.length > 0
-            ? data.length.toString()
-            : "0";
+        : `Rp. ${FormatNumbers(total)}`;
 
     return (
-        <CardDashboard title="Selesai Struk" content={content} fetchDetailData={fetchDetailData} />
+        <CardDashboard title="Sales Hari Ini" content={content} fetchDetailData={fetchDetailData} />
     );
 };
 
-export default SelesaiStruk;
+export default SalesHariIni;

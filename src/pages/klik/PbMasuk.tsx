@@ -12,7 +12,12 @@ const PbMasuk = () => {
         const baseUrl = import.meta.env.VITE_BASE_URL;
         const fetchData = async () => {
             try {
-                const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`);
+                const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
+                    params: {
+                        startDate: new Date().toISOString().split('T')[0],
+                        flagTmi: "N",
+                    }
+                });
 
                 setData(data);
             } catch (err: unknown) {
@@ -24,7 +29,7 @@ const PbMasuk = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

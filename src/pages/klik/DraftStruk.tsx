@@ -14,7 +14,8 @@ const DraftStruk = () => {
             try {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
-                        status: 3
+                        status: 3,
+                        flagTmi: "N"
                     }
                 });
 
@@ -28,7 +29,7 @@ const DraftStruk = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

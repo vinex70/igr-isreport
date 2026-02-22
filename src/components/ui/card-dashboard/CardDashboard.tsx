@@ -42,6 +42,7 @@ const CardDashboard: React.FC<CardDashboardProps> = ({ title, content, fetchDeta
                         <p className="item-center text-blue-400">Detail &rarr;</p>
                     </Button>
                 </div>
+                <span className="text-2xs text-gray-500"> Note : Diluar PB Member TMI</span>
             </div>
 
             {/* Modal */}

@@ -2,7 +2,7 @@ const LoadingIgr = () => {
     return (
         <>
             {/* Container untuk spinner dan teks */}
-            <div className="flex flex-col justify-center items-center min-h-screen">
+            <div className="flex flex-col justify-center items-center min-h-screen bg-black/50">
                 {/* Spinner Animation */}
                 <div className="relative flex justify-center items-center">
                     {/* Spinner Background */}

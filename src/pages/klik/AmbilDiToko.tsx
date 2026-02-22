@@ -14,7 +14,8 @@ const AmbilDitoko = () => {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
                         obi_shippingservice: "Ambil Di Toko",
-                        notRecid: ["6", "B"]
+                        notRecid: ["6", "B"],
+                        flagTmi: "N"
                     }
                 });
 
@@ -28,7 +29,7 @@ const AmbilDitoko = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

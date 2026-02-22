@@ -13,7 +13,8 @@ const SiapScanning = () => {
             try {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
-                        status: 2
+                        status: 2,
+                        flagTmi: "N",
                     }
                 });
 
@@ -27,7 +28,7 @@ const SiapScanning = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

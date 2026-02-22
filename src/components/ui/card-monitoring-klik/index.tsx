@@ -9,12 +9,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useSort from "@/hooks/useSort";
 import usePagination from "@/hooks/usePagination";
 import { LuRefreshCw } from "react-icons/lu";
+import { RiFileExcel2Line } from "react-icons/ri";
+import { exportToExcelStyled } from "@/utils/excelExport";
+import { formatDate } from "@/utils/FormateDate";
 
 type FilterKlikSchema = z.infer<typeof filterKlikSchema>;
 
 const CardMonitoringKlik: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [dataPb, setDataPb] = useState<ApiDataKlik[]>([]);
+    const [lastFilter, setLastFilter] = useState<FilterKlikSchema | null>(null);
 
     const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -46,6 +50,7 @@ const CardMonitoringKlik: React.FC = () => {
                 params: filters,
             });
             setDataPb(response.data.data);
+            setLastFilter(filters);
             setError(null);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -92,8 +97,40 @@ const CardMonitoringKlik: React.FC = () => {
         { label: "Selesai Struk", key: "selesai_struk" },
         { label: "Batal", key: "batal" },
         { label: "Total Pb", key: "total_pb" },
-        { label: "Total Rp Order", key: "total_order" }
+        { label: "Rp Order", key: "total_order" },
+        { label: "Rp Real", key: "real_order" },
+        { label: "Rp Batal", key: "batal_order" },
     ];
+
+    const handleExport = () => {
+        if (!sortedData.length) return;
+
+        const excelHeaders = headers.map(h => h.label);
+
+        const excelData = sortedData.map((item, index) =>
+            headers.map((h) => {
+                if (h.key === "index") return String(index + 1);
+
+                const value = item[h.key as keyof ApiDataKlik];
+
+                const num = Number(value);
+
+                if (!isNaN(num)) {
+                    return num;
+                }
+
+                return value;
+            })
+        );
+
+        const filename = `Monitoring Klik ${formatDate(lastFilter?.startDate)} - ${formatDate(lastFilter?.endDate)}.xlsx`;
+        exportToExcelStyled({
+            title: "Monitoring Klik",
+            headers: excelHeaders,
+            data: excelData,
+            fileName: filename,
+        });
+    };
 
     return (
         <>
@@ -144,6 +181,10 @@ const CardMonitoringKlik: React.FC = () => {
                                 >
                                     reset
                                 </Button>
+
+                                <Button type="button" onClick={handleExport} className="flex justify-center items-center bg-green-500 text-white px-4 rounded-md hover:bg-green-700">
+                                    <RiFileExcel2Line size={30} className="mr-2" /> Export to Excel
+                                </Button>
                             </div>
                         </div>
                     </form>
@@ -160,7 +201,7 @@ const CardMonitoringKlik: React.FC = () => {
                 </div>
 
                 {/* Table */}
-                <div className="shadow-lg overflow-y-auto">
+                <div className="shadow-xl overflow-y-auto">
                     <div className="table w-full">
                         <div className="table-header-group sticky top-0 bg-blue-400 hover:bg-blue-500">
                             <div className="table-row">
@@ -213,6 +254,12 @@ const CardMonitoringKlik: React.FC = () => {
                                         </div>
                                         <div className="table-cell border border-gray-400 px-4 py-2 text-end">
                                             {new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(item.total_order)}
+                                        </div>
+                                        <div className="table-cell border border-gray-400 px-4 py-2 text-end">
+                                            {new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(item.real_order)}
+                                        </div>
+                                        <div className="table-cell border border-gray-400 px-4 py-2 text-end">
+                                            {new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(item.batal_order)}
                                         </div>
                                     </div>
                                 ))

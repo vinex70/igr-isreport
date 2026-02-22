@@ -14,7 +14,8 @@ const SiapStruk = () => {
             try {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
-                        status: 5
+                        status: 5,
+                        flagTmi: "N",
                     }
                 });
 
@@ -28,7 +29,7 @@ const SiapStruk = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

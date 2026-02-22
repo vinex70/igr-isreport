@@ -15,7 +15,8 @@ const CodBelumSelesai = () => {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
                         typeBayar: "COD",
-                        notRecid: ["6", "B"]
+                        notRecid: ["6", "B"],
+                        flagTmi: "N"
                     }
                 });
 
@@ -29,7 +30,7 @@ const CodBelumSelesai = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

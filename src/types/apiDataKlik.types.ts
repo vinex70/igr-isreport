@@ -29,6 +29,8 @@ export interface ApiDataKlik {
     batal: number;
     total_pb: number;
     total_order: number;
+    real_order: number;
+    batal_order: number;
     obi_draftstruk: string;
     packing_by: string;
     ekspedisi: string;

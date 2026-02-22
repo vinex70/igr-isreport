@@ -5,7 +5,6 @@ interface SortConfig<T> {
     direction: "ascending" | "descending" | "";
 }
 
-// Custom hook menggunakan arrow function
 const useSort = <T,>(data: T[]) => {
     const [sortedData, setSortedData] = useState<T[]>(data);
     const [sortConfig, setSortConfig] = useState<SortConfig<T>>({
@@ -13,22 +12,48 @@ const useSort = <T,>(data: T[]) => {
         direction: "",
     });
 
-    // Update sortedData ketika data berubah
     useEffect(() => {
         setSortedData(data);
     }, [data]);
 
-    // Sorting function dengan arrow function
+    const parseNumber = (val: unknown): number | null => {
+        if (val === null || val === undefined) return null;
+
+        // hapus koma ribuan → "303,187,123" → "303187123"
+        const cleaned = String(val).replace(/,/g, "");
+        const num = Number(cleaned);
+
+        return isNaN(num) ? null : num;
+    };
+
     const handleSort = (key: keyof T) => {
         let direction: "ascending" | "descending" = "ascending";
+
         if (sortConfig.key === key && sortConfig.direction === "ascending") {
             direction = "descending";
         }
 
         const sorted = [...sortedData].sort((a, b) => {
-            if (a[key] < b[key]) return direction === "ascending" ? -1 : 1;
-            if (a[key] > b[key]) return direction === "ascending" ? 1 : -1;
-            return 0;
+            const aVal = a[key];
+            const bVal = b[key];
+
+            const numA = parseNumber(aVal);
+            const numB = parseNumber(bVal);
+
+            // ✅ kalau dua-duanya angka → sort numerik
+            if (numA !== null && numB !== null) {
+                return direction === "ascending"
+                    ? numA - numB
+                    : numB - numA;
+            }
+
+            // ✅ fallback string compare
+            const strA = String(aVal ?? "");
+            const strB = String(bVal ?? "");
+
+            return direction === "ascending"
+                ? strA.localeCompare(strB)
+                : strB.localeCompare(strA);
         });
 
         setSortedData(sorted);

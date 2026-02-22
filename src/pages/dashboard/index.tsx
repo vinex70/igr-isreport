@@ -16,6 +16,10 @@ import { ApiDataKlik } from "@/types/apiDataKlik.types";
 import ModalDetailKlik from "@/components/ui/modal-detail-klik/ModalDetailKlik";
 import { NextDaySameDay } from "@/components/ui/card-nextday-sameday/nextday-sameday";
 import CardMonitoringKlik from "@/components/ui/card-monitoring-klik";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import DragLabelButton from "@/components/DragLabelButton";
+import SalesKemarin from "../klik/SalesKemarin";
+import SalesHariIni from "../klik/SalesHariIni";
 
 type FilterKlikSchema = z.infer<typeof filterKlikSchema>;
 
@@ -25,6 +29,7 @@ const Dashboard: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [selectedItem, setSelectedItem] = useState<ApiDataKlik[]>([]);  // State to manage the selected item for the modal
     const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
+    const [showNextDayModal, setShowNextDayModal] = useState(false);
 
     const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -76,9 +81,26 @@ const Dashboard: React.FC = () => {
         setSelectedItem([]);  // Clear the selected item
     };
 
+    const toggleNextDayModal = () => {
+        setShowNextDayModal(!showNextDayModal);
+    };
 
     return (
         <div className="container mx-auto">
+
+            {/* Floating Button */}
+            {/* <Draggable>
+                <button
+                    onClick={toggleNextDayModal}
+                    className="fixed bottom-8 right-8 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 cursor-move"
+                    title="Lihat NextDay / SameDay"
+                >
+                    NextDay / SameDay
+                </button>
+            </Draggable> */}
+
+            <DragLabelButton onClick={toggleNextDayModal} label="NextDay / SameDay" />
+
             <div className="container flex justify-center px-32 py-10 mx-auto">
                 <div className="flex justify-around flex-wrap gap-y-4 items-center max-w-screen-lg dark:bg-gray-800">
                     <PbMasuk />
@@ -89,6 +111,8 @@ const Dashboard: React.FC = () => {
                     <AmbilDitoko />
                     <CodBelumSelesai />
                     <SelesaiStruk />
+                    <SalesKemarin />
+                    <SalesHariIni />
                 </div>
             </div>
 
@@ -96,12 +120,17 @@ const Dashboard: React.FC = () => {
                 <CardMonitoringKlik />
             </div>
 
-            <div>
-                <div className="text-center py-2">
-                    <h1 className="bg-slate-400 font-bold text-lg">NextDay Dan SameDay Hari ini</h1>
-                </div>
-                <NextDaySameDay />
-            </div>
+            {/* Modal untuk NextDay / SameDay */}
+            <Dialog open={showNextDayModal} onOpenChange={setShowNextDayModal}>
+                <DialogContent className="max-w-7xl max-h-[90vh]">
+                    <DialogHeader>
+                        <DialogTitle className="text-center">NextDay dan SameDay Hari Ini</DialogTitle>
+                    </DialogHeader>
+                    <div className="max-h-[80vh] overflow-y-auto p-4">
+                        <NextDaySameDay />
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             <h1 className="text-2xl font-bold mb-4">Klik Data Table</h1>
 
@@ -194,6 +223,26 @@ const Dashboard: React.FC = () => {
                     </select>
                     {errors.status && (
                         <p className="text-red-500 text-sm">{errors.status.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <label htmlFor="jenisMember" className="block text-sm font-medium mb-1">
+                        Jenis Member:
+                    </label>
+                    <select
+                        id="jenisMember"
+                        {...register("jenisMember")}
+                        className="border rounded px-2 py-1"
+                    >
+                        <option value="">All</option>
+                        <option value="1">Merah</option>
+                        <option value="2">Biru</option>
+                        <option value="3">TMI</option>
+                        <option value="4">Horeka</option>
+                    </select>
+                    {errors.jenisMember && (
+                        <p className="text-red-500 text-sm">{errors.jenisMember.message}</p>
                     )}
                 </div>
 

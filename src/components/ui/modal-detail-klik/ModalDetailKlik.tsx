@@ -66,7 +66,7 @@ const ModalDetailKlik: React.FC<ModalDetailProps> = ({ isOpen, onClose, obiKey }
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50 max-h-screen overflow-y-auto">
             <div className="bg-white p-6 rounded-lg w-11/12">
                 <div className="flex justify-end">
                     <button onClick={onClose} className="bg-red-500 text-white items-center rounded-xl p-2">

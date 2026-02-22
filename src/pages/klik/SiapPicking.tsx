@@ -14,7 +14,8 @@ const SiapPicking = () => {
             try {
                 const { data } = await axios.get<ApiDataKlik[]>(`${baseUrl}/api/klik/detail`, {
                     params: {
-                        status: 1
+                        status: 1,
+                        flagTmi: "N",
                     }
                 });
 
@@ -28,7 +29,7 @@ const SiapPicking = () => {
             }
         };
 
-        const interval = setInterval(fetchData, 1000);
+        const interval = setInterval(fetchData, 10000);
 
         return () => clearInterval(interval);
     }, []);

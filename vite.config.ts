@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://192.168.226.33:3000',
+          target: env.VITE_BASE_URL,
           changeOrigin: true,
           secure: false,
         },
